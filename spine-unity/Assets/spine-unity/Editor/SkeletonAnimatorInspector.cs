@@ -11,11 +11,13 @@ using Spine;
 
 [CustomEditor(typeof(SkeletonAnimator))]
 public class SkeletonAnimatorInspector : SkeletonRendererInspector {
-	protected SerializedProperty layerMixModes;
+    protected SerializedProperty layerMixModes, targetDeltaTime, timeScale;
 	protected bool isPrefab;
 	protected override void OnEnable () {
 		base.OnEnable();
 		layerMixModes = serializedObject.FindProperty("layerMixModes");
+        targetDeltaTime = serializedObject.FindProperty("targetDeltaTime");
+        timeScale = serializedObject.FindProperty("timeScale");
 
 		if (PrefabUtility.GetPrefabType(this.target) == PrefabType.Prefab)
 			isPrefab = true;
@@ -29,6 +31,9 @@ public class SkeletonAnimatorInspector : SkeletonRendererInspector {
 		SkeletonAnimator component = (SkeletonAnimator)target;
 		if (!component.valid)
 			return;
+
+        EditorGUILayout.PropertyField(targetDeltaTime);
+        EditorGUILayout.PropertyField(timeScale);
 
 		EditorGUILayout.Space();
 

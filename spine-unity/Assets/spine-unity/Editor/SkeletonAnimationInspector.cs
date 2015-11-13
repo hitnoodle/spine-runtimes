@@ -36,7 +36,7 @@ using Spine;
 
 [CustomEditor(typeof(SkeletonAnimation))]
 public class SkeletonAnimationInspector : SkeletonRendererInspector {
-	protected SerializedProperty animationName, loop, timeScale;
+    protected SerializedProperty animationName, loop, timeScale, targetDeltaTime;
 	protected bool isPrefab;
 
 	protected override void OnEnable () {
@@ -44,6 +44,7 @@ public class SkeletonAnimationInspector : SkeletonRendererInspector {
 		animationName = serializedObject.FindProperty("_animationName");
 		loop = serializedObject.FindProperty("loop");
 		timeScale = serializedObject.FindProperty("timeScale");
+        targetDeltaTime = serializedObject.FindProperty("targetDeltaTime");
 
 		if (PrefabUtility.GetPrefabType(this.target) == PrefabType.Prefab)
 			isPrefab = true;
@@ -97,6 +98,7 @@ public class SkeletonAnimationInspector : SkeletonRendererInspector {
 		EditorGUILayout.PropertyField(loop);
 		EditorGUILayout.PropertyField(timeScale);
 		component.timeScale = Math.Max(component.timeScale, 0);
+        EditorGUILayout.PropertyField(targetDeltaTime);
 
 		EditorGUILayout.Space();
 
